@@ -1,4 +1,4 @@
-class Paks {
+class Pack {
     const dias
     const precio
     const cordinador
@@ -10,7 +10,7 @@ class Paks {
     method valorTotal() = precio + benEspeciales.filter({b => b.esVigente()}).map({b => b.costo()}).sum()
 }
 
-class Nacionales inherits Paks {
+class Nacionales inherits Pack {
     const provincia
     const actividades = []
 
@@ -18,7 +18,7 @@ class Nacionales inherits Paks {
 
 }
 
-class Internacionales inherits Paks {
+class Internacionales inherits Pack {
     const pais
     const escalas
     const esDeInteres
@@ -33,6 +33,6 @@ class Provinciales inherits Nacionales {
     const recargo = (precio + benEspeciales.filter({b => b.esVigente()}).map({b => b.costo()}).sum()) * 0.05
 
     override method esPackPremium() = actividades.size() >= 4 and ciudades > 5 and benEspeciales.filter({b => b.esVigente()}).size() > 3
-    override method valorTotal() = if (esPackPremium()) super() + recargo else super()
+    override method valorTotal() = if (self.esPackPremium()) super() + recargo else super()
 
 }
